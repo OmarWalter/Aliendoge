@@ -13,8 +13,8 @@
 
   /** Official links (edit to your real URLs). */
   window.OAM_SOCIAL = {
-    twitter: "https://x.com/olympusAsteroid",
-    telegram: "https://t.me/OlympusAsteroid",
+    twitter: "https://x.com/aliendogeeth",
+    telegram: "https://t.me/aliendogePortal",
   };
 
   window.getOamAddresses = function getOamAddresses() {
