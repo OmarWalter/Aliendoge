@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Olympus Asteroid — $ALIENDOGE</title>
+<link rel="icon" type="image/png" href="assets/favicon.png" />
+<link rel="apple-touch-icon" href="assets/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg-0: #05060A;
+    --bg-1: #0A0B14;
+    --bg-2: #12131F;
+    --bg-3: #1A1B2A;
+    --line: rgba(255, 204, 120, 0.08);
+    --line-strong: rgba(255, 204, 120, 0.18);
+    --ink-0: #F6EFE0;
+    --ink-1: rgba(246, 239, 224, 0.72);
+    --ink-2: rgba(246, 239, 224, 0.48);
+    --ink-3: rgba(246, 239, 224, 0.28);
+    --gold: oklch(0.82 0.13 78);
+    --gold-soft: oklch(0.72 0.11 78);
+    --gold-deep: oklch(0.52 0.14 62);
+    --amber-glow: 255, 190, 110;
+    --cyan: oklch(0.82 0.10 210);
+    --magenta: oklch(0.65 0.18 340);
+    --success: oklch(0.78 0.14 150);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg-0);
+    color: var(--ink-0);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    position: relative;
+    min-height: 100vh;
+  }
+
+  /* Cosmic background layers */
+  .cosmos {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .nebula {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+  }
+
+  .nebula-1 {
+    width: 900px; height: 900px;
+    top: -300px; right: -200px;
+    background: radial-gradient(circle, rgba(255, 170, 80, 0.35) 0%, rgba(220, 100, 50, 0.15) 40%, transparent 70%);
+  }
+  .nebula-2 {
+    width: 1100px; height: 800px;
+    top: 40%; left: -300px;
+    background: radial-gradient(circle, rgba(120, 80, 200, 0.28) 0%, rgba(80, 40, 160, 0.14) 40%, transparent 70%);
+  }
+  .nebula-3 {
+    width: 700px; height: 700px;
+    top: 120%; right: 10%;
+    background: radial-gradient(circle, rgba(255, 140, 60, 0.22) 0%, transparent 65%);
+  }
+
+  .stars {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.9), transparent),
+      radial-gradient(1px 1px at 60% 70%, rgba(255,240,200,0.7), transparent),
+      radial-gradient(1.5px 1.5px at 40% 40%, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1px 1px at 80% 10%, rgba(200,220,255,0.6), transparent),
+      radial-gradient(1px 1px at 15% 80%, rgba(255,255,255,0.9), transparent),
+      radial-gradient(1.5px 1.5px at 70% 50%, rgba(255,220,150,0.8), transparent),
+      radial-gradient(1px 1px at 30% 15%, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1px 1px at 90% 85%, rgba(200,200,255,0.6), transparent),
+      radial-gradient(1px 1px at 50% 95%, rgba(255,255,255,0.8), transparent);
+    background-size: 100% 100%;
+  }
+
+  .grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, var(--line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(2deg); }
+  }
+
+  @keyframes drift {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100vh); }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 40px rgba(var(--amber-glow), 0.3); }
+    50% { box-shadow: 0 0 80px rgba(var(--amber-glow), 0.6); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  @keyframes orbit {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes ticker-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* Main content above cosmos */
+  #root { position: relative; z-index: 1; }
+
+  /* Utility */
+  .font-display { font-family: 'Space Grotesk', sans-serif; }
+  .font-mono { font-family: 'JetBrains Mono', monospace; }
+  .text-gold { color: var(--gold); }
+  .text-dim { color: var(--ink-1); }
+  .text-dimmer { color: var(--ink-2); }
+
+  button { font-family: inherit; }
+
+  .container {
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  @media (max-width: 768px) {
+    .container { padding: 0 20px; }
+  }
+</style>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+<script src="config.js"></script>
+<script type="text/babel" src="components/Web3Context.jsx"></script>
+</head>
+<body>
+
+<div class="cosmos">
+  <div class="nebula nebula-1"></div>
+  <div class="nebula nebula-2"></div>
+  <div class="nebula nebula-3"></div>
+  <div class="stars" id="stars-layer-1" style="opacity: 0.8;"></div>
+  <div class="stars" id="stars-layer-2" style="opacity: 0.5; transform: scale(1.3);"></div>
+  <div class="grid-overlay"></div>
+  <canvas id="starfield" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+</div>
+
+<div id="root"></div>
+
+<script type="text/babel" src="components/Hero.jsx"></script>
+<script type="text/babel" src="components/Stats.jsx"></script>
+<script type="text/babel" src="components/HowItWorks.jsx"></script>
+<!-- <script type="text/babel" src="components/Dashboard.jsx"></script> -->
+<script type="text/babel" src="components/Roadmap.jsx"></script>
+<script type="text/babel" src="components/FAQ.jsx"></script>
+<script type="text/babel" src="components/Crew.jsx"></script>
+<script type="text/babel" src="components/FloatingDogs.jsx"></script>
+<script type="text/babel" src="components/Footer.jsx"></script>
+<script type="text/babel" src="components/App.jsx"></script>
+
+<script>
+  // Animated starfield canvas
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let shootingStars = [];
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function initStars() {
+    stars = [];
+    const count = Math.floor((canvas.width * canvas.height) / 4000);
+    for (let i = 0; i < count; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.2 + 0.2,
+        alpha: Math.random() * 0.8 + 0.2,
+        twinkleSpeed: Math.random() * 0.02 + 0.005,
+        twinklePhase: Math.random() * Math.PI * 2,
+        hue: Math.random() > 0.85 ? 40 : (Math.random() > 0.7 ? 210 : 0)
+      });
+    }
+  }
+  initStars();
+  window.addEventListener('resize', initStars);
+
+  function spawnShootingStar() {
+    if (Math.random() < 0.003) {
+      shootingStars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height * 0.5,
+        vx: -(Math.random() * 3 + 4),
+        vy: Math.random() * 2 + 1,
+        life: 1,
+        length: Math.random() * 80 + 60,
+      });
+    }
+  }
+
+  let scrollY = 0;
+  window.addEventListener('scroll', () => { scrollY = window.scrollY; });
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Parallax offset
+    const parallax = scrollY * 0.15;
+
+    stars.forEach(s => {
+      s.twinklePhase += s.twinkleSpeed;
+      const twinkle = (Math.sin(s.twinklePhase) + 1) / 2;
+      const a = s.alpha * (0.4 + twinkle * 0.6);
+      const y = (s.y - parallax * (s.r / 1.5)) % canvas.height;
+      const yy = y < 0 ? y + canvas.height : y;
+
+      if (s.hue === 40) {
+        ctx.fillStyle = `rgba(255, 210, 140, ${a})`;
+      } else if (s.hue === 210) {
+        ctx.fillStyle = `rgba(180, 210, 255, ${a})`;
+      } else {
+        ctx.fillStyle = `rgba(255, 255, 255, ${a})`;
+      }
+      ctx.beginPath();
+      ctx.arc(s.x, yy, s.r, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Bright stars get a glow
+      if (s.r > 1) {
+        const grad = ctx.createRadialGradient(s.x, yy, 0, s.x, yy, s.r * 4);
+        grad.addColorStop(0, `rgba(255, 220, 160, ${a * 0.4})`);
+        grad.addColorStop(1, 'rgba(255, 220, 160, 0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(s.x, yy, s.r * 4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    });
+
+    spawnShootingStar();
+    shootingStars = shootingStars.filter(ss => {
+      ss.x += ss.vx;
+      ss.y += ss.vy;
+      ss.life -= 0.015;
+      if (ss.life <= 0) return false;
+
+      const grad = ctx.createLinearGradient(ss.x, ss.y, ss.x - ss.vx * ss.length / 4, ss.y - ss.vy * ss.length / 4);
+      grad.addColorStop(0, `rgba(255, 220, 160, ${ss.life})`);
+      grad.addColorStop(1, 'rgba(255, 220, 160, 0)');
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(ss.x, ss.y);
+      ctx.lineTo(ss.x - ss.vx * ss.length / 4, ss.y - ss.vy * ss.length / 4);
+      ctx.stroke();
+      return true;
+    });
+
+    requestAnimationFrame(animate);
+  }
+  animate();
+</script>
+
+</body>
+</html>
