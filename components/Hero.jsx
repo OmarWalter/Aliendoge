@@ -314,7 +314,7 @@ function Hero() {
           </div>
 
           {/* Floating info tags */}
-          <div style={{
+          {/* <div style={{
             position: 'absolute',
             top: 40, right: 20,
             padding: '10px 14px',
@@ -332,7 +332,7 @@ function Hero() {
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--success)', boxShadow: '0 0 8px var(--success)' }}></span>
               ORBITING
             </div>
-          </div>
+          </div> */}
 
           <div style={{
             position: 'absolute',
