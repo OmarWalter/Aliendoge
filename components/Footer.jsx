@@ -176,7 +176,7 @@ function CTAFooter() {
               <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
                 <button
                   type="button"
-                  onClick={() => window.location.href = 'https://app.uniswap.org/swap?chain=mainnet&inputCurrency=NATIVE&outputCurrency=0xComingSoon'}
+                  onClick={() => window.location.href = 'https://app.uniswap.org/swap?chain=mainnet&inputCurrency=NATIVE&outputCurrency=0x5bec4be99a03a9b9502ebb537af6eae4bcb310cb'}
                   style={{
                     background: 'linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%)',
                     color: '#0A0B14',

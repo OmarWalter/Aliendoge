@@ -158,7 +158,7 @@ function HowItWorks() {
           </div>
           <button
             type="button"
-            onClick={() =>  window.open('https://etherscan.io/token/0xComingSoon', '_blank')}
+            onClick={() =>  window.open('https://etherscan.io/token/0x5bec4be99a03a9b9502ebb537af6eae4bcb310cb', '_blank')}
             style={{
               background: 'transparent',
               color: 'var(--gold)',
