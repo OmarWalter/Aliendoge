@@ -308,7 +308,7 @@ function Hero() {
             border: '1px solid rgba(255, 190, 110, 0.2)',
           }}>
             <img src="assets/dog-sit.png" alt="Olympus Asteroid" style={{
-              width: '100%', height: '100%', objectFit: 'cover',
+              width: '95%', height: '100%', objectFit: 'cover',
               objectPosition: 'center 20%',
             }} />
           </div>
